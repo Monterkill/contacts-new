@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    >
+    tools:ignore="ExtraText">
 
     <!--显示字母-->
     <TextView
@@ -17,9 +18,9 @@
         android:id="@+id/contacts_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_weight="1"
-        android:text="name"
+        android:text="@string/name"
         android:textColor="#000000"
         android:textSize="18sp" />
 
@@ -27,9 +28,9 @@
         android:id="@+id/contacts_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_weight="1"
-        android:text="number" />
+        android:text="@string/number" />
 
 
 </LinearLayout>

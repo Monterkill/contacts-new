@@ -11,4 +11,6 @@
     <string name="QRScan">扫一扫</string>
     <string name = "search_hint"> 查询通话记录 </string>
     <string name="action_statistic">通话统计</string>
+    <string name="number">number</string>
+    <string name="name">name</string>
 </resources>
