@@ -78,8 +78,8 @@ public class HistoryFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-    public void filterData(){
-        Task task = new QueryCallRecordByKeyWordsTask("hjz");
+    public void filterData(String temp){
+        Task task = new QueryCallRecordByKeyWordsTask(temp);
         Processor.getInstance().process(task);
         while(!task.finished());
         HistoryList.clear();

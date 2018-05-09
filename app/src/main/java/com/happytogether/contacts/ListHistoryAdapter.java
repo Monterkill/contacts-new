@@ -1,25 +1,31 @@
 package com.happytogether.contacts;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.happytogether.contacts.util.MyUtil;
 import com.happytogether.framework.type.CallRecord;
 
 import java.util.List;
 
-public class ListHistoryAdapter extends BaseAdapter {
+public class ListHistoryAdapter extends ArrayAdapter<CallRecord> {
     private String changeStr = "";
     //
     private List<CallRecord> mlistdatas;
     private LayoutInflater mInflater;
 
-    public ListHistoryAdapter(Context mcontext, List<CallRecord> mlistdatas) {
+    public ListHistoryAdapter(Context mcontext, int textViewResourceId, List<CallRecord> mlistdatas) {
+        super(mcontext, textViewResourceId, mlistdatas);
         this.mlistdatas = mlistdatas;
         mInflater = LayoutInflater.from(mcontext);
     }
@@ -29,41 +35,33 @@ public class ListHistoryAdapter extends BaseAdapter {
         return mlistdatas.size();
     }
 
-    @Override
-    public Object getItem(int i) {
-        return mlistdatas.get(i);
-    }
+//    @Override
+//    public Object getItem(int i) {
+//        return mlistdatas.get(i);
+//    }
 
     @Override
     public long getItemId(int i) {
         return i;
     }
-
+    private int resourceID;
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        CallRecord record = getItem(position);
+        View view = LayoutInflater.from(getContext()).inflate(resourceID,parent,false);
+        TextView name = view.findViewById(R.id.history_name);
+        TextView number= view.findViewById(R.id.history_number);
+        TextView type = view.findViewById(R.id.history_type);
+        TextView date = view.findViewById(R.id.history_date);
+        TextView duration = view.findViewById(R.id.history_duration);
+        TextView location= view.findViewById(R.id.history_location);
 
-        view = mInflater.inflate(R.layout.search_layout_item, null);
-        TextView tv_name = view.findViewById(R.id.text_name);
-        tv_name.setText(mlistdatas.get(i).getName());
-        //处理关键字颜色变化
-        if (null != mlistdatas.get(i) &&
-                mlistdatas.get(i).getName().contains(changeStr))
-        {
-            int index = mlistdatas.get(i).getName().indexOf(changeStr);
-            int len = changeStr.length();
-            Spanned temp = Html.fromHtml(mlistdatas.get(i).getName().substring(0, index)
-                    + "<font color=#ff0000>"
-                    + mlistdatas.get(i).getName().substring(index, index + len) + "</font>"
-                    + mlistdatas.get(i).getName().substring(index + len, mlistdatas.get(i).getName().length()));
-            //tv_name.setText(temp);
-            tv_name.setText(mlistdatas.get(i).getName());
-        }
-        else
-            {
-            //tv_name.setText(mlistdatas.get(i).getName());
-                tv_name.setText("");
-        }
-
+        name.setText(record.getName());
+        number.setText(record.getNumber());
+        type.setText(MyUtil.getCallStatusStr(record.getStatus()));
+        date.setText(MyUtil.formatCallDate(record.getStartTime()));
+        duration.setText(MyUtil.formatTs(record.getDuration()));
+        location.setText((String)record.getFeature("location"));
         return view;
     }
 
