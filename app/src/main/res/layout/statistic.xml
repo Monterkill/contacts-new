@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/start_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="40dp"
+        android:text="开始时间："
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statistic" />
+
+    <TextView
+        android:id="@+id/end_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="截止时间："
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/start_txt"
+        app:layout_constraintTop_toBottomOf="@+id/start_txt" />
+
+    <TextView
+        android:id="@+id/statistic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="通话统计："
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/start_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="2018年5月1日"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/start_txt"
+        app:layout_constraintStart_toEndOf="@+id/start_txt" />
+
+    <TextView
+        android:id="@+id/end_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="2018年5月30日"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/end_txt"
+        app:layout_constraintStart_toEndOf="@+id/end_txt" />
+
+    <Button
+        android:id="@+id/btn_statistic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="查询"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/end_txt" />
+
+    <TextView
+        android:id="@+id/count_all_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="总通话次数："
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/end_txt"
+        app:layout_constraintTop_toBottomOf="@+id/btn_statistic" />
+
+    <TextView
+        android:id="@+id/count_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0次"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/count_all_txt"
+        app:layout_constraintStart_toStartOf="@+id/end_date" />
+
+    <TextView
+        android:id="@+id/all_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="总通话时长："
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/count_all_txt"
+        app:layout_constraintTop_toBottomOf="@+id/count_all_txt" />
+
+    <TextView
+        android:id="@+id/time_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0小时0分钟0秒"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/all_text"
+        app:layout_constraintStart_toStartOf="@+id/count_all" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="呼出次数："
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/all_text"
+        app:layout_constraintTop_toBottomOf="@+id/all_text" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0次"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView12"
+        app:layout_constraintStart_toStartOf="@+id/time_all" />
+
+    <TextView
+        android:id="@+id/out_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="呼出总时长："
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/textView12"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <TextView
+        android:id="@+id/time_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0小时0分钟0秒"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/out_text"
+        app:layout_constraintStart_toStartOf="@+id/textView13" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="呼入总次数："
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/out_text"
+        app:layout_constraintTop_toBottomOf="@+id/out_text" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0次"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView14"
+        app:layout_constraintStart_toStartOf="@+id/time_out" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="呼入总时长："
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/textView14"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0小时0分钟0秒"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView16"
+        app:layout_constraintStart_toStartOf="@+id/textView15" />
+
+</android.support.constraint.ConstraintLayout>
