@@ -17,7 +17,12 @@ import android.provider.ContactsContract.Contacts.Data;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.StructuredName;
 import android.provider.CallLog;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import android.util.Log;
 
@@ -109,6 +114,7 @@ public class ResourceManagerSystem implements IResourceManager {
         LogBus.Log(LogBus.DEBUGTAGS, "get all contacts ok, num:" + String.valueOf(contactsList.size()));
         contactsList.clear();
         initContacts();
+        Sort();
         return contactsList;
     }
 
@@ -176,5 +182,9 @@ public class ResourceManagerSystem implements IResourceManager {
         _res.getContentResolver().delete(CallLog.Calls.CONTENT_URI, CallLog.Calls._ID+"=?", new String[]{record.getId()+""});
         return true;
     }
-
+    private List<Contacts> Sort()
+    {
+        Collections.sort(contactsList);
+        return  contactsList;
+    }
 }
