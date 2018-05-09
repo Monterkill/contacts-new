@@ -46,16 +46,22 @@ public class ListHistoryAdapter extends BaseAdapter {
         TextView tv_name = view.findViewById(R.id.text_name);
         tv_name.setText(mlistdatas.get(i).getName());
         //处理关键字颜色变化
-        if (null != mlistdatas.get(i) && mlistdatas.get(i).getName().contains(changeStr)) {
+        if (null != mlistdatas.get(i) &&
+                mlistdatas.get(i).getName().contains(changeStr))
+        {
             int index = mlistdatas.get(i).getName().indexOf(changeStr);
             int len = changeStr.length();
             Spanned temp = Html.fromHtml(mlistdatas.get(i).getName().substring(0, index)
                     + "<font color=#ff0000>"
                     + mlistdatas.get(i).getName().substring(index, index + len) + "</font>"
                     + mlistdatas.get(i).getName().substring(index + len, mlistdatas.get(i).getName().length()));
-            tv_name.setText(temp);
-        } else {
+            //tv_name.setText(temp);
             tv_name.setText(mlistdatas.get(i).getName());
+        }
+        else
+            {
+            //tv_name.setText(mlistdatas.get(i).getName());
+                tv_name.setText("");
         }
 
         return view;
