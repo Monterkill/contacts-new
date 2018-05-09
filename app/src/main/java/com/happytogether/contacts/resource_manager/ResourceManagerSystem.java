@@ -97,6 +97,8 @@ public class ResourceManagerSystem implements IResourceManager {
                     if (PhoneCur.moveToNext())
                     {
                         String number = PhoneCur.getString(PhoneCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        // 去掉手机号中的空格和“-”
+                        number = number.replace(" ", "").replace("-", "").replace("+86", "");
                         String numberType = PhoneCur.getString(PhoneCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
                         ct.setNumber(number);
                     }
