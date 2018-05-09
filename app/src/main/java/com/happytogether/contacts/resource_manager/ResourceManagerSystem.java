@@ -13,9 +13,9 @@ import android.content.ContentValues;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.RawContacts;
+import android.provider.ContactsContract.Contacts.Data;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.StructuredName;
-import android.provider.ContactsContract.Contacts.Data;
 import android.provider.CallLog;
 import java.util.ArrayList;
 import java.util.List;
@@ -152,6 +152,7 @@ public class ResourceManagerSystem implements IResourceManager {
 
     @Override
     public boolean removeContacts(Contacts contacts) {
+        _res.getContentResolver().delete(ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI,Long.parseLong(contacts.getId())), null, null);
         _res.getContentResolver().delete(ContentUris.withAppendedId(RawContacts.CONTENT_URI,Long.parseLong(contacts.getId())), null, null);
         return true;
     }

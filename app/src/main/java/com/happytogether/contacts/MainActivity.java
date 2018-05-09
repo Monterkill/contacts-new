@@ -55,6 +55,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission_group.CONTACTS)!= PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{
+                    Manifest.permission.WRITE_CONTACTS,
+                    Manifest.permission.WRITE_CALL_LOG,
+                    Manifest.permission.READ_CONTACTS,
+                    Manifest.permission.CALL_PHONE,
+                    Manifest.permission.READ_CALL_LOG
+            },1);
+
+        }
         new FrameworkInitialization(this);
 
         super.onCreate(savedInstanceState);
@@ -136,7 +147,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_ADD:
-                //返回刷新联系人列表。这里没有写，所以要重新进入程序才能看到新添加的联系人
+                mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+                mViewPager.setAdapter(mSectionsPagerAdapter);//返回刷新联系人列表。这里没有写，所以要重新进入程序才能看到新添加的联系人
                 break;
             default:
                 break;

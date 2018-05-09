@@ -4,11 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
-import android.os.Handler;
-import android.os.Message;
-import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,7 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import com.happytogether.contacts.task.AutoFreshContactsFragmentTask;
+
 import com.happytogether.contacts.task.QueryAllContactsTask;
 import com.happytogether.framework.processor.Processor;
 import com.happytogether.framework.task.Task;
@@ -38,14 +34,14 @@ import java.util.List;
  */
 
 public class ContactsFragment extends Fragment{
-    public ContactsAdapter adapter;
-    private List<Contacts> contactsList = new ArrayList<>();
+    public static ContactsAdapter adapter;
+    private static List<Contacts> contactsList = new ArrayList<>();
     public final static int REQUEST_REMOVE=100;
     public final static int REQUEST_DELETE=100;
 
     public Context context;
 
-    public Handler msgHandler = new Handler(){
+    /*/public Handler msgHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -53,7 +49,7 @@ public class ContactsFragment extends Fragment{
                 updateData();
             }
         }
-    };
+    };/*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,8 +64,8 @@ public class ContactsFragment extends Fragment{
         contactsView.setOnItemClickListener(new MyListener() );
         contactsView.setOnCreateContextMenuListener(new MyListener());
 
-        Task task = new AutoFreshContactsFragmentTask(this, 2000);
-        Processor.getInstance().process(task);
+        //   Task task = new AutoFreshContactsFragmentTask(this, 2000);
+        //    Processor.getInstance().process(task);
 
         return rootView;
     }
@@ -116,11 +112,11 @@ public class ContactsFragment extends Fragment{
         //点击拨打电话
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-              String phoneNumber = (String) ((TextView)view.findViewById(R.id.contacts_number)).getText();
-              Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
-              intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-              startActivity(intent);
-              updateData();
+            String phoneNumber = (String) ((TextView)view.findViewById(R.id.contacts_number)).getText();
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            updateData();
         }
 
         //长按弹出菜单
@@ -144,9 +140,11 @@ public class ContactsFragment extends Fragment{
                 Intent intent = new Intent(context, RemovePerson.class).putExtras(bundle);
                 startActivityForResult(intent, REQUEST_REMOVE);
                 Toast.makeText(getContext(), "编辑联系人的方法", Toast.LENGTH_SHORT).show();
+                updateData();
                 return true;
             case 1:
-                  DeletePerson(it.position);
+                DeletePerson(it.position);
+                updateData();
                 return true;
             default:
                 return super.onContextItemSelected(item);
