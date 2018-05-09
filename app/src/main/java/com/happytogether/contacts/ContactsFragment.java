@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,7 +19,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.AbsListView;
 
 import com.happytogether.contacts.task.QueryAllContactsTask;
 import com.happytogether.framework.processor.Processor;
@@ -35,35 +33,40 @@ import java.util.List;
  * Created by Monsterkill on 2018/4/16.
  */
 
-public class ContactsFragment extends Fragment implements
-        WordsNavigation.onWordsChangeListener, AbsListView.OnScrollListener{
+public class ContactsFragment extends Fragment{
     public static ContactsAdapter adapter;
     private static List<Contacts> contactsList = new ArrayList<>();
     public final static int REQUEST_REMOVE=100;
     public final static int REQUEST_DELETE=100;
-    private static ListView contactsView;
-    private static TextView tv;
-    private Handler handler;
-    private WordsNavigation word;
 
     public Context context;
+
+    /*/public Handler msgHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 100) {
+                updateData();
+            }
+        }
+    };/*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.tab_contacts, container, false);
-        contactsView = (ListView) rootView.findViewById(R.id.contacts_view);
+        ListView contactsView = (ListView) rootView.findViewById(R.id.contacts_view);
         adapter = new ContactsAdapter(getActivity(), R.layout.item_contacts,contactsList);
         getContactsList();
         setListViewHeightBasedOnChildren(contactsView);
         contactsView.setAdapter(adapter);
         contactsView.setOnItemClickListener(new MyListener() );
         contactsView.setOnCreateContextMenuListener(new MyListener());
-        word = (WordsNavigation) rootView.findViewById(R.id.words);
-        word.setOnWordsChangeListener(this);
-        handler = new Handler();
-        tv = (TextView) rootView.findViewById(R.id.tv);
+
+        //   Task task = new AutoFreshContactsFragmentTask(this, 2000);
+        //    Processor.getInstance().process(task);
+
         return rootView;
     }
 
@@ -171,60 +174,6 @@ public class ContactsFragment extends Fragment implements
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight;
         listView.setLayoutParams(params);
-    }
-
-
-    //手指按下字母改变监听回调
-    @Override
-    public void wordsChange(String words) {
-        updateWord(words);
-        updateListView(words);
-    }
-
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-    }
-
-    @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        //当滑动列表的时候，更新右侧字母列表的选中状态
-        word.setTouchIndex(contactsList.get(firstVisibleItem).getHead().substring(0,1));
-    }
-
-    /**
-     * @param words 首字母
-     */
-    private void updateListView(String words) {
-        for (int i = 0; i < contactsList.size(); i++) {
-            String headerWord = contactsList.get(i).getHead().substring(0,1);
-            //将手指按下的字母与列表中相同字母开头的项找出来
-            if (words.equals(headerWord)) {
-                //将列表选中哪一个
-                contactsView.setSelection(i);
-                //找到开头的一个即可
-                return;
-            }
-        }
-    }
-
-    /**
-     * 更新中央的字母提示
-     *
-     * @param words 首字母
-     */
-    private void updateWord(String words) {
-            tv.setText(words);
-            tv.setVisibility(View.VISIBLE);
-            //清空之前的所有消息
-            handler.removeCallbacksAndMessages(null);
-            //1s后让tv隐藏
-            handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                tv.setVisibility(View.GONE);
-            }
-        }, 500);
     }
 
 

@@ -3,7 +3,6 @@ package com.happytogether.contacts;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +28,9 @@ public class ContactsAdapter extends ArrayAdapter<Contacts> {
 
     private  class ViewHolder
     {
-        public TextView tv_word;
-        public TextView tv_name;
-        public TextView tv_number;
+        private TextView tv_word;
+        private TextView tv_name;
+        private TextView tv_number;
     }
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Contacts contacts = getItem(position);
@@ -43,7 +42,7 @@ public class ContactsAdapter extends ArrayAdapter<Contacts> {
             holder.tv_name = convertView.findViewById(R.id.contacts_name);
             holder.tv_number = convertView.findViewById(R.id.contacts_number);
             holder.tv_word = convertView.findViewById(R.id.contacts_id);
-            Log.i("233",holder.tv_name.getText().toString());
+
         }
         else
         {
@@ -69,7 +68,6 @@ public class ContactsAdapter extends ArrayAdapter<Contacts> {
                 holder.tv_word.setVisibility(View.VISIBLE);
             }
         }
-        convertView.setTag(holder);
         return convertView;
     }
 }
