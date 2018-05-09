@@ -137,6 +137,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_about:
                 msg += "关于";
                 break;
+            case R.id.action_statistic:
+                msg += "通话统计";
+                Intent intent2 = new Intent(this,Statistic.class);
+                startActivity(intent2);
+            case R.id.action_remind:
+                msg += "日程提醒";
+                Intent intent3 = new Intent(this,RemindPerson.class);
+                startActivity(intent3);
         }
         Toast.makeText(MainActivity.this,msg,Toast.LENGTH_SHORT).show();
 
