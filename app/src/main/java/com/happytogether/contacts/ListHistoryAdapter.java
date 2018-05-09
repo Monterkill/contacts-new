@@ -9,15 +9,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.happytogether.framework.type.CallRecord;
+
 import java.util.List;
 
 public class ListHistoryAdapter extends BaseAdapter {
     private String changeStr = "";
     //
-    private List<String> mlistdatas;
+    private List<CallRecord> mlistdatas;
     private LayoutInflater mInflater;
 
-    public ListHistoryAdapter(Context mcontext, List<String> mlistdatas) {
+    public ListHistoryAdapter(Context mcontext, List<CallRecord> mlistdatas) {
         this.mlistdatas = mlistdatas;
         mInflater = LayoutInflater.from(mcontext);
     }
@@ -42,18 +44,18 @@ public class ListHistoryAdapter extends BaseAdapter {
 
         view = mInflater.inflate(R.layout.search_layout_item, null);
         TextView tv_name = view.findViewById(R.id.text_name);
-        tv_name.setText(mlistdatas.get(i));
+        tv_name.setText(mlistdatas.get(i).getName());
         //处理关键字颜色变化
-        if (null != mlistdatas.get(i) && mlistdatas.get(i).contains(changeStr)) {
-            int index = mlistdatas.get(i).indexOf(changeStr);
+        if (null != mlistdatas.get(i) && mlistdatas.get(i).getName().contains(changeStr)) {
+            int index = mlistdatas.get(i).getName().indexOf(changeStr);
             int len = changeStr.length();
-            Spanned temp = Html.fromHtml(mlistdatas.get(i).substring(0, index)
+            Spanned temp = Html.fromHtml(mlistdatas.get(i).getName().substring(0, index)
                     + "<font color=#ff0000>"
-                    + mlistdatas.get(i).substring(index, index + len) + "</font>"
-                    + mlistdatas.get(i).substring(index + len, mlistdatas.get(i).length()));
+                    + mlistdatas.get(i).getName().substring(index, index + len) + "</font>"
+                    + mlistdatas.get(i).getName().substring(index + len, mlistdatas.get(i).getName().length()));
             tv_name.setText(temp);
         } else {
-            tv_name.setText(mlistdatas.get(i));
+            tv_name.setText(mlistdatas.get(i).getName());
         }
 
         return view;

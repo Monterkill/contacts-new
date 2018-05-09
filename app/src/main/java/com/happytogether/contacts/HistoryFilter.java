@@ -2,10 +2,14 @@ package com.happytogether.contacts;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.telecom.Call;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.happytogether.framework.resouce_manager.ResourceManager;
+import com.happytogether.framework.type.CallRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +50,11 @@ public class HistoryFilter extends AppCompatActivity {
         });
     }
 
-    private List<String> initData() {
-        List<String> mlistdata = new ArrayList<>();
+    private List<CallRecord> initData() {
+
+        List re = ResourceManager.getInstance().getAllCallRecord();
+        return re;
+        /*List<String> mlistdata = new ArrayList<>();
         mlistdata.add("我的第一写作，简书");
         mlistdata.add("很多年以后，开始相信，所谓爱情，都是因为寂寞");
         mlistdata.add("曾经企盼有地老天荒的爱情，有海枯石烂的情缘");
@@ -62,7 +69,7 @@ public class HistoryFilter extends AppCompatActivity {
         mlistdata.add("曾经，一遍遍的思念，一遍遍的在心里抱怨");
         mlistdata.add("爱与被爱同样是受伤害，谁先不爱谁先离开");
         mlistdata.add("还有de小星");
-        return mlistdata;
+        return mlistdata;*/
 
     }
 }
