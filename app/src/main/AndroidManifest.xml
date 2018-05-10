@@ -31,7 +31,8 @@
         </activity>
         <activity android:name=".AddPerson" />
         <activity android:name=".RemovePerson" />
-        <activity android:name=".HistoryFilter" />
+        <activity android:name=".Statistic" />
+        <activity android:name=".RemindPerson" />
     </application>
 
 </manifest>
