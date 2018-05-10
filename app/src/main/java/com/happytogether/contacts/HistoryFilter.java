@@ -5,9 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.telecom.Call;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.happytogether.contacts.task.QueryAllCallRecordTask;
 import com.happytogether.contacts.task.QueryCallRecordByKeyWordsTask;
 import com.happytogether.framework.processor.Processor;
 import com.happytogether.framework.resouce_manager.ResourceManager;
@@ -27,12 +29,11 @@ public class HistoryFilter extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history_filter);
-        ListView mlistview = (ListView) findViewById(R.id.history_view);
+        ListView mlistview = this.findViewById(R.id.history_view);
         meditText = (EditText) findViewById(R.id.editText);
-        //
         adapter = new ListHistoryAdapter(this, R.layout.item_history, HistoryList);
+        //updateData();
         mlistview.setAdapter(adapter);
-
 
         //meditText监听文本变化
         meditText.addTextChangedListener(new TextWatcher() {
@@ -47,6 +48,7 @@ public class HistoryFilter extends AppCompatActivity {
                 //adapter.changeText(charSequence.toString());
                 System.out.println(charSequence.toString());
                 filterData(charSequence.toString());
+                System.out.println("len = " + HistoryList.size());
             }
 
             @Override
@@ -69,5 +71,16 @@ public class HistoryFilter extends AppCompatActivity {
         if(task.getStatus() == Task.SUCCESS){
             HistoryList.addAll((List<CallRecord>)task.getResult());
         }
+    }
+
+    public void updateData(){
+        Task task = new QueryAllCallRecordTask();
+        Processor.getInstance().process(task);
+        while(!task.finished());
+        HistoryList.clear();
+        if(task.getStatus() == Task.SUCCESS){
+            HistoryList.addAll((List<CallRecord>)task.getResult());
+        }
+        adapter.notifyDataSetChanged();
     }
 }
