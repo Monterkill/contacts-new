@@ -62,7 +62,9 @@ public class MainActivity extends AppCompatActivity {
                     Manifest.permission.WRITE_CALL_LOG,
                     Manifest.permission.READ_CONTACTS,
                     Manifest.permission.CALL_PHONE,
-                    Manifest.permission.READ_CALL_LOG
+                    Manifest.permission.READ_CALL_LOG,
+                    Manifest.permission.READ_CALENDAR,
+                    Manifest.permission.WRITE_CALENDAR
             },1);
 
         }
