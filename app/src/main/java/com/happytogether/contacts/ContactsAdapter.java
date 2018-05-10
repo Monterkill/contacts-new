@@ -68,6 +68,7 @@ public class ContactsAdapter extends ArrayAdapter<Contacts> {
                 holder.tv_word.setVisibility(View.VISIBLE);
             }
         }
+        convertView.setTag(holder);
         return convertView;
     }
 }
