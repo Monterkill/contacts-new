@@ -21,30 +21,13 @@ import java.util.List;
 public class ListHistoryAdapter extends ArrayAdapter<CallRecord> {
     private String changeStr = "";
     //
-    private List<CallRecord> mlistdatas;
-    private LayoutInflater mInflater;
-
-    public ListHistoryAdapter(Context mcontext, int textViewResourceId, List<CallRecord> mlistdatas) {
-        super(mcontext, textViewResourceId, mlistdatas);
-        this.mlistdatas = mlistdatas;
-        mInflater = LayoutInflater.from(mcontext);
-    }
-
-    @Override
-    public int getCount() {
-        return mlistdatas.size();
-    }
-
-//    @Override
-//    public Object getItem(int i) {
-//        return mlistdatas.get(i);
-//    }
-
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
     private int resourceID;
+    public ListHistoryAdapter(@NonNull Context context, int textViewResourceId, @NonNull List<CallRecord> objects) {
+        super(context,textViewResourceId, objects);
+        resourceID = textViewResourceId;
+    }
+
+    @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         CallRecord record = getItem(position);

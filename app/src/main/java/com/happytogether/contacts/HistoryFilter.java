@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.telecom.Call;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -29,10 +31,13 @@ public class HistoryFilter extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history_filter);
-        ListView mlistview = this.findViewById(R.id.history_view);
+        Log.i("233","1");
+        ListView mlistview = findViewById(R.id.history_view2);
+        Log.i("233","2");
         meditText = (EditText) findViewById(R.id.editText);
         adapter = new ListHistoryAdapter(this, R.layout.item_history, HistoryList);
-        //updateData();
+        updateData();
+        setListViewHeightBasedOnChildren(mlistview);
         mlistview.setAdapter(adapter);
 
         //meditText监听文本变化
@@ -45,7 +50,7 @@ public class HistoryFilter extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 //告诉adapter 文本有变化了
-                //adapter.changeText(charSequence.toString());
+                adapter.changeText(charSequence.toString());
                 System.out.println(charSequence.toString());
                 filterData(charSequence.toString());
                 System.out.println("len = " + HistoryList.size());
@@ -82,5 +87,18 @@ public class HistoryFilter extends AppCompatActivity {
             HistoryList.addAll((List<CallRecord>)task.getResult());
         }
         adapter.notifyDataSetChanged();
+    }
+
+    public void setListViewHeightBasedOnChildren(ListView listView) {
+        //通过adapter得到ListView的长度
+        int totalHeight = 0;
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View listItem = adapter.getView(i, null, listView);
+            listItem.measure(0, 0); //计算子项View 的宽高 //统计所有子项的总高度
+            totalHeight += listItem.getMeasuredHeight()+listView.getDividerHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight;
+        listView.setLayoutParams(params);
     }
 }
