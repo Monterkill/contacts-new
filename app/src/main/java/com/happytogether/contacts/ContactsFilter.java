@@ -2,7 +2,6 @@ package com.happytogether.contacts;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.telecom.Call;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -12,30 +11,31 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.happytogether.contacts.task.QueryAllCallRecordTask;
+import com.happytogether.contacts.task.QueryAllContactsTask;
 import com.happytogether.contacts.task.QueryCallRecordByKeyWordsTask;
+import com.happytogether.contacts.task.QueryContactsByKeyWordsTask;
 import com.happytogether.framework.processor.Processor;
 import com.happytogether.framework.resouce_manager.ResourceManager;
 import com.happytogether.framework.task.Task;
 import com.happytogether.framework.type.CallRecord;
+import com.happytogether.framework.type.Contacts;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistoryFilter extends AppCompatActivity {
+public class ContactsFilter extends AppCompatActivity {
 
-    private ListHistoryAdapter adapter;
+    private ListContactsAdapter adapter;
     private EditText meditText;
-    private List<CallRecord> HistoryList = new ArrayList<>();
+    private List<Contacts> ContactsList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.history_filter);
-        Log.i("233","1");
-        ListView mlistview = findViewById(R.id.history_view2);
-        Log.i("233","2");
+        setContentView(R.layout.contacts_filter);
+        ListView mlistview = findViewById(R.id.contacts_view2);
         meditText = (EditText) findViewById(R.id.editText);
-        adapter = new ListHistoryAdapter(this, R.layout.item_history, HistoryList);
+        adapter = new ListContactsAdapter(this, R.layout.item_contacts, ContactsList);
         updateData();
         setListViewHeightBasedOnChildren(mlistview);
         mlistview.setAdapter(adapter);
@@ -50,10 +50,13 @@ public class HistoryFilter extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 //告诉adapter 文本有变化了
+                Log.i("chan","1");
                 adapter.changeText(charSequence.toString());
+                Log.i("chan","1.5");
                 System.out.println(charSequence.toString());
                 filterData(charSequence.toString());
-                System.out.println("len = " + HistoryList.size());
+                Log.i("chan","2");
+                System.out.println("len = " + ContactsList.size());
             }
 
             @Override
@@ -69,22 +72,24 @@ public class HistoryFilter extends AppCompatActivity {
     }
 
     public void filterData(String temp){
-        Task task = new QueryCallRecordByKeyWordsTask(temp);
+        Task task = new QueryContactsByKeyWordsTask(temp);
         Processor.getInstance().process(task);
         while(!task.finished());
-        HistoryList.clear();
+        Log.i("chan","1.8");
+        ContactsList.clear();
         if(task.getStatus() == Task.SUCCESS){
-            HistoryList.addAll((List<CallRecord>)task.getResult());
+            ContactsList.addAll((List<Contacts>)task.getResult());
         }
+        adapter.notifyDataSetChanged();
     }
 
     public void updateData(){
-        Task task = new QueryAllCallRecordTask();
+        Task task = new QueryAllContactsTask();
         Processor.getInstance().process(task);
         while(!task.finished());
-        HistoryList.clear();
+        ContactsList.clear();
         if(task.getStatus() == Task.SUCCESS){
-            HistoryList.addAll((List<CallRecord>)task.getResult());
+            ContactsList.addAll((List<Contacts>)task.getResult());
         }
         adapter.notifyDataSetChanged();
     }

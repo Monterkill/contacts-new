@@ -99,6 +99,39 @@ public class MyUtil {
         return reRecord;
     }
 
+    public static List filterContactsByKeyWords(List contacts, String num) throws PinyinException {
+        Iterator it = contacts.iterator();
+        List <Contacts> reContacts = new ArrayList<Contacts>();
+        num = num.toLowerCase(); //为了模糊匹配规定所有字母全部转为小写进行
+        while(it.hasNext())
+        {
+            Contacts theContact = (Contacts) it.next();
+            String pattern = "\\w*" + num + "\\w*";
+            String content = theContact.getNumber();
+            boolean isMatch = Pattern.matches(pattern, content);
+            if(isMatch) {
+                reContacts.add(theContact);
+                continue;
+            }
+            content = theContact.getName().toLowerCase();
+
+            String wholepinyin = PinyinHelper.convertToPinyinString(content, "", PinyinFormat.WITHOUT_TONE);
+            isMatch = Pattern.matches(pattern, wholepinyin);
+            if(isMatch) {
+                reContacts.add(theContact);
+                continue;
+            }
+
+            String initialpinyin = PinyinHelper.getShortPinyin(content);
+            isMatch = Pattern.matches(pattern, initialpinyin);
+            if(isMatch) {
+                reContacts.add(theContact);
+                continue;
+            }
+        }
+        return reContacts;
+    }
+
     public static String formatTs(long ts) {
         long min = (ts % 3600) / 60;
         long sec = ts % 60;
