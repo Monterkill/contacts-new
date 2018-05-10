@@ -25,6 +25,8 @@ import com.happytogether.framework.processor.Processor;
 import com.happytogether.framework.task.Task;
 import com.happytogether.framework.type.Contacts;
 import com.happytogether.contacts.task.*;
+
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +72,7 @@ public class ContactsFragment extends Fragment{
         return rootView;
     }
 
-    public void updateData(){
+    public static void updateData(){
         Task task = new QueryAllContactsTask();
         Processor.getInstance().process(task);
         while(!task.finished());
@@ -140,7 +142,6 @@ public class ContactsFragment extends Fragment{
                 Intent intent = new Intent(context, RemovePerson.class).putExtras(bundle);
                 startActivityForResult(intent, REQUEST_REMOVE);
                 Toast.makeText(getContext(), "编辑联系人的方法", Toast.LENGTH_SHORT).show();
-                updateData();
                 return true;
             case 1:
                 DeletePerson(it.position);

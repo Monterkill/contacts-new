@@ -86,6 +86,7 @@ public class RemovePerson extends AppCompatActivity {
             }else{
                 Toast.makeText(RemovePerson.this, "联系人" + _name + "修改失败", Toast.LENGTH_SHORT).show();
             }
+            ContactsFragment.updateData();
             finish();
         }
     }

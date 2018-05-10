@@ -3,6 +3,7 @@ package com.happytogether.contacts;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,7 @@ public class ContactsAdapter extends ArrayAdapter<Contacts> {
         {
             holder = (ViewHolder)convertView.getTag();
         }
+        Log.i("chan","changed");
         holder.tv_word.setText(contacts.getHead());
         holder.tv_number.setText(contacts.getNumber());
         holder.tv_name.setText(contacts.getName());
