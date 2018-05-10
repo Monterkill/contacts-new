@@ -6,6 +6,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
+import com.google.zxing.WriterException;
 import com.happytogether.contacts.task.RemoveContactsTask;
 import com.happytogether.framework.processor.Processor;
 import com.happytogether.framework.task.Task;
@@ -39,7 +41,8 @@ public class RemovePerson extends AppCompatActivity {
     private EditText remove_number, remove_name;
     private String remove_id;
     private String old_name = "",old_number = "";
-    private Button button_remove;
+    private Button button_remove, button_showqr;
+    private ImageView qrImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +55,16 @@ public class RemovePerson extends AppCompatActivity {
         old_number = bundle.getString("number");
         remove_name.setText(old_name);
         remove_number.setText(old_number);
+        qrImage = (ImageView) findViewById(R.id.qrimage);
         remove_id = bundle.getString("id");
+        button_showqr = (Button) findViewById(R.id.button_showqr);
+        //点击显示二维码
+        button_showqr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getQRCode();
+            }
+        });
         button_remove = findViewById(R.id.button_edit);
         button_remove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,4 +102,31 @@ public class RemovePerson extends AppCompatActivity {
             finish();
         }
     }
+
+    //获取二维码
+    public void getQRCode(){
+        String strName = remove_name.getText().toString().trim();
+        String strNumber = remove_number.getText().toString().trim();
+
+        Bitmap bitmap = null;
+        if (Objects.equals(strName, "")||Objects.equals(strNumber,"")) {
+            Toast.makeText(RemovePerson.this, "姓名和电话不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        try {
+            //转换为vcard格式文本
+            String contentEtString = "BEGIN:VCARD  \n" +
+                    "FN:"+ strName +
+                    "\nTEL:"+ strNumber +
+                    "\nEND:VCARD";
+            bitmap = CodeCreator.createQRCode(contentEtString, 200, 200, null);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+        if (bitmap != null) {
+            qrImage.setImageBitmap(bitmap);
+            Toast.makeText(RemovePerson.this,"已生成二维码",Toast.LENGTH_SHORT);
+        }
+    }
+
 }

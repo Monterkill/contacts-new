@@ -130,34 +130,33 @@ public class MyUtil {
     }
 
     //拨打时间
-    public static String formatCallDate(long ts){
-        Date tsDate = new Date(ts * 1000);
-        Date today = new Date(System.currentTimeMillis());
+    public static String formatCallDate(Long callDate){
+        Date date = new Date(System.currentTimeMillis());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String date_today = simpleDateFormat.format(today);
-
+        String date_today = simpleDateFormat.format(date);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String callDateStr = sdf.format(tsDate);
+        String callDateStr = sdf.format(callDate);
         if (callDateStr.equals(date_today)) { //判断是否为今天
             sdf = new SimpleDateFormat("HH:mm");
-            callDateStr = sdf.format(tsDate);
+            callDateStr = sdf.format(callDate);
         } else if (date_today.contains(callDateStr.substring(0, 7))) { //判断是否为当月
             sdf = new SimpleDateFormat("dd");
-            int callDay = Integer.valueOf(sdf.format(tsDate));
+            int callDay = Integer.valueOf(sdf.format(callDate));
 
-            int day = Integer.valueOf(sdf.format(today));
+            int day = Integer.valueOf(sdf.format(date));
             if (day - callDay == 1) {
                 sdf = new SimpleDateFormat("HH:mm");
-                callDateStr = "昨天 "+ sdf.format(tsDate);
+                callDateStr = "昨天 "+ sdf.format(callDate);
             } else {
                 sdf = new SimpleDateFormat("MM-dd");
-                callDateStr = sdf.format(tsDate);
+                callDateStr = sdf.format(callDate);
             }
         } else if (date_today.contains(callDateStr.substring(0, 4))) { //判断是否为当年
             sdf = new SimpleDateFormat("MM-dd");
-            callDateStr = sdf.format(tsDate);
+            callDateStr = sdf.format(callDate);
         }
         return callDateStr;
     }
+
 
 }

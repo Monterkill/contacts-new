@@ -118,7 +118,6 @@ public class ContactsFragment extends Fragment{
             Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-            updateData();
         }
 
         //长按弹出菜单

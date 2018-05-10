@@ -63,7 +63,8 @@ public class ContactsAdapter extends ArrayAdapter<Contacts> {
             headWord = list.get(position-1).getHead();
             if(holder.tv_word.getText().equals(headWord))
             {
-                holder.tv_word.setVisibility(View.GONE);
+                //holder.tv_word.setVisibility(View.GONE);
+                holder.tv_word.setText("");
             }
             else
             {
