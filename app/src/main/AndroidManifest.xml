@@ -31,7 +31,8 @@
         </activity>
         <activity android:name=".AddPerson" />
         <activity android:name=".RemovePerson" />
-        <activity android:name=".ContactsFilter" />
+        <activity android:name=".ContactsFilter"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Statistic" />
         <activity android:name=".RemindPerson" />
     </application>

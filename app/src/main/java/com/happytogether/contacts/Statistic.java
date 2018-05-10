@@ -29,8 +29,9 @@ import com.happytogether.framework.processor.Processor;
 import com.happytogether.framework.task.Task;
 
 public class Statistic extends AppCompatActivity{
-    private TextView start_date,end_date;
+    private TextView start_date,end_date, count_all, count_out;
     private long SStime,EEndtime;
+    private Button button;
     @Override
     protected void onCreate (Bundle bundle) {
         super.onCreate(bundle);
@@ -38,6 +39,8 @@ public class Statistic extends AppCompatActivity{
 
         start_date = (TextView) findViewById(R.id.start_date);
         end_date = (TextView) findViewById(R.id.end_date);
+        count_all = (TextView) findViewById(R.id.count_all);
+        count_out = (TextView) findViewById(R.id.count_out);
         start_date.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,9 +73,18 @@ public class Statistic extends AppCompatActivity{
             e.printStackTrace();
         }
 
-        String record_1=getrecord(SStime,EEndtime);
-        Log.d("text",record_1);
-        Toast.makeText(Statistic.this,record_1,Toast.LENGTH_SHORT).show();
+        button = (Button) findViewById(R.id.btn_statistic);
+        button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count_all.setText("3次");
+                count_out.setText("3次");
+            }
+        });
+
+//        String record_1=getrecord(SStime,EEndtime);
+//        Log.d("text",record_1);
+//        Toast.makeText(Statistic.this,record_1,Toast.LENGTH_SHORT).show();
 
 
     }

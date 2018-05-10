@@ -51,7 +51,7 @@ public class ContactsAdapter extends ArrayAdapter<Contacts> {
         }
         Log.i("chan","changed");
         holder.tv_word.setText(contacts.getHead());
-        holder.tv_number.setText(contacts.getNumber());
+        holder.tv_number.setText(contacts.getNumber().replace(" ","").replace("-","").replace("+86",""));
         holder.tv_name.setText(contacts.getName());
         if(position == 0)
         {
